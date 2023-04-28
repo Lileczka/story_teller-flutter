@@ -8,14 +8,15 @@ class FullStory {
   List<Story> _morceauxText = [
     Story('Il était une fois une petite fille appelée Zoé.',1),
     Story('dans un petit village niché au cœur d\'une vallée verdoyante',2),
-    Story('qui avait les cheveux rouges. Mais rouges, comme un poisson rouge.',3),
+    Story('avec ces cheveux rouges. Mais rouges, comme un poisson rouge.',3),
     Story('sa maman l’envoie chercher des châtaignes dans la forêt.',4),
-    Story('En chemin, Zoé rencontre un bébé écureuil',5),
-    Story("Un jour, alors en se promenant près de la rivière qui traversait le village, une quelque chose d'étrange dans l'eau a apparu.",7),
-    Story('tu ne me reconnais pas?',8),
-    Story('J’ai faim ! J’ai faim ! J’ai faim !',9),
+    Story('en chemin, Zoé rencontre un bébé écureuil',5),
+    Story("un jour, alors en se promenant près de la rivière qui traversait le village, une quelque chose d'étrange dans l'eau a apparu.",7),
+    Story('Tu ne me reconnais pas?',8),
+    Story('dans cette forêt magique, où tout peut arriver, et l\'aventure est toujours au coin du chemin.',9),
     Story('Oh, maman, il est vide, ce panier',10),
-    Story('Jojo, c’est un vieil écureuil. Un très vieil écureuil',11),
+    Story('La petite fille a ri et a dansé avec les créatures magiques toute la nuit.',11),
+    Story('Soudain, elle a entendu un bruit étrange et a couru pour voir ce que c\'était.',12),
   ];
 
   String getQuestionText() {
