@@ -2,23 +2,49 @@ import 'dart:math';
 import 'text_object.dart';
 
 class FullStory {
-  int _questionNumber = 0;
-  
-
-  List<Story> _morceauxText = [
-    Story('Il était une fois une petite fille appelée Zoé.',1),
-    Story('dans un petit village niché au cœur d\'une vallée verdoyante',2),
-    Story('avec ces cheveux rouges. Mais rouges, comme un poisson rouge.',3),
-    Story('sa maman l’envoie chercher des châtaignes dans la forêt.',4),
-    Story('en chemin, Zoé rencontre un bébé écureuil',5),
-    Story("un jour, alors en se promenant près de la rivière qui traversait le village, une quelque chose d'étrange dans l'eau a apparu.",7),
-    Story('Tu ne me reconnais pas?',8),
-    Story('dans cette forêt magique, où tout peut arriver, et l\'aventure est toujours au coin du chemin.',9),
-    Story('Oh, maman, il est vide, ce panier',10),
-    Story('La petite fille a ri et a dansé avec les créatures magiques toute la nuit.',11),
-    Story('Soudain, elle a entendu un bruit étrange et a couru pour voir ce que c\'était.',12),
+  List<Story> morceauxText = [
+    const Story('Il était une fois une petite fille appelée Zoé.'),
+    const Story('dans un petit village niché au cœur d\'une vallée verdoyante'),
+    const Story(
+        'avec ces cheveux rouges. Mais rouges, comme un poisson rouge.'),
+    const Story('sa maman l’envoie chercher des châtaignes dans la forêt.'),
+    const Story('en chemin, Zoé rencontre un bébé écureuil'),
+    const Story(
+        "un jour, alors en se promenant près de la rivière qui traversait le village, une quelque chose d'étrange dans l'eau a apparu."),
+    const Story('Tu ne me reconnais pas?'),
+    const Story(
+        'dans cette forêt magique, où tout peut arriver, et l\'aventure est toujours au coin du chemin.'),
+    const Story('Oh, maman, il est vide, ce panier'),
+    const Story(
+        'La petite fille a ri et a dansé avec les créatures magiques toute la nuit.'),
+    const Story(
+        'Soudain, elle a entendu un bruit étrange et a couru pour voir ce que c\'était.'),
   ];
 
+  List<String> empty = [];
+
+  getRandom() {
+    Random random = Random();
+
+    int randomIndex = random.nextInt(morceauxText.length);
+    String randomValue = morceauxText[randomIndex].story;
+
+    return randomValue;
+  }
+
+  void addRandom(String randomValue) {
+    morceauxText.remove(randomValue);
+    empty.add(randomValue);
+  }
+}
+
+
+
+
+
+
+
+/*
   String getQuestionText() {
   String texteComplet = '';
   for (Story story in _morceauxText) {
@@ -68,12 +94,9 @@ String addStory() {
     return newContent;
   }
 }
-
-  
 }
 
-  
-
+  */
 
 
 
