@@ -1,14 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'story_teller.dart';
+import 'package:story_teller/text_object.dart';
+//import 'story_teller.dart';
 
 void main() => runApp(Storyteller());
 
 class Storyteller extends StatelessWidget {
-  const Storyteller({super.key});
-
+  //const Storyteller({super.key});
+  Storyteller({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 134, 73, 73),
         appBar: AppBar(
@@ -21,14 +25,13 @@ class Storyteller extends StatelessWidget {
         body: SafeArea(
           child: Container(
             width: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/images/papirus.png"),
                 alignment: Alignment.topCenter,
               ),
             ),
             child: const StoryPage(),
-           
           ),
         ),
       ),
@@ -37,51 +40,85 @@ class Storyteller extends StatelessWidget {
 }
 
 class StoryPage extends StatefulWidget {
-  const StoryPage({super.key});
+  //const StoryPage({super.key});
+  const StoryPage({Key? key}) : super(key: key);
 
   @override
   State<StoryPage> createState() => _StoryPageState();
 }
 
 class _StoryPageState extends State<StoryPage> {
-   // création d'une instance de la classe FullStory
-  final FullStory fullStory = FullStory();
-  // initialisation
+  // création d'une instance de la classe FullStory
+  //FullStory fullStory = FullStory();
   bool showText = false;
-  String addContent = '';
+
+  List<String> empty = [];
+  List<Story> morceauxText = [
+    const Story('Il était une fois une petite fille appelée Zoé.'),
+    const Story('dans un petit village niché au cœur d\'une vallée verdoyante'),
+    const Story(
+        'avec ces cheveux rouges. Mais rouges, comme un poisson rouge.'),
+    const Story('sa maman l’envoie chercher des châtaignes dans la forêt.'),
+    const Story('en chemin, Zoé rencontre un bébé écureuil'),
+    const Story(
+        "un jour, alors en se promenant près de la rivière qui traversait le village, une quelque chose d'étrange dans l'eau a apparu."),
+    const Story('Tu ne me reconnais pas?'),
+    const Story(
+        'dans cette forêt magique, où tout peut arriver, et l\'aventure est toujours au coin du chemin.'),
+    const Story('Oh, maman, il est vide, ce panier'),
+    const Story(
+        'La petite fille a ri et a dansé avec les créatures magiques toute la nuit.'),
+    const Story(
+        'Soudain, elle a entendu un bruit étrange et a couru pour voir ce que c\'était.'),
+  ];
+
+  String getRandom() {
+    Random random = Random();
+
+    int randomIndex = random.nextInt(morceauxText.length);
+    morceauxText.removeAt(randomIndex);
+    String randomValue = morceauxText[randomIndex].story;
+
+    print(randomValue);
+    print(randomIndex);
+
+    return randomValue;
+  }
+
+  void addRandom(randomValue) {
+    //morceauxText.remove(randomValue);
+    empty.add(randomValue);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      //taille du button
       children: <Widget>[
-        SizedBox(
+        const SizedBox(
           height: 60,
         ),
         // condition affichage du texte (cacher le text)
-        if (showText)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0),
-            child: Text(
-              addContent,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Caveat',
-                fontSize: 18.0,
-                color: Colors.black,
-              ),
+        if (!showText)
+          Expanded(
+            child: ListView.builder(
+              itemCount: empty.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(empty[index]),
+                );
+              },
             ),
           ),
-       // un widget qui permet de créer un espace disponible vide et flexible dans une colonne ou une ligne ici espace verticale
-        const Spacer(),
+
+        // un widget qui permet de créer un espace disponible vide et flexible dans une colonne ou une ligne ici espace verticale
+        //const Spacer(),
         // bouton qui appelle la méthode addStory()
+
         TextButton(
           onPressed: () {
+            String randomValue = getRandom();
             setState(() {
-            showText = true;
-        //concatènation de la nouvelle histoire générée à la fin de l'historique précédent.
-            addContent += fullStory.addStory();
-              print('addStory() called'); 
+              addRandom(randomValue);
             });
           },
           style: ButtonStyle(
@@ -89,7 +126,7 @@ class _StoryPageState extends State<StoryPage> {
               const Size(200, 40),
             ),
             backgroundColor: MaterialStateProperty.all(
-              Color.fromARGB(255, 244, 115, 60),
+              const Color.fromARGB(255, 244, 115, 60),
             ),
           ),
           child: const Text(
@@ -99,9 +136,6 @@ class _StoryPageState extends State<StoryPage> {
               fontSize: 20.0,
             ),
           ),
-        ),
-        const SizedBox(
-          height: 40,
         ),
       ],
     );
