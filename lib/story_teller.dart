@@ -23,18 +23,19 @@ class FullStory {
 
   List<String> empty = [];
 
-  getRandom() {
+  int getRandom() {
     Random random = Random();
 
     int randomIndex = random.nextInt(morceauxText.length);
     String randomValue = morceauxText[randomIndex].story;
-
-    return randomValue;
+    print(randomIndex);
+    print(randomValue);
+    return randomIndex;
   }
 
-  void addRandom(String randomValue) {
-    morceauxText.remove(randomValue);
-    empty.add(randomValue);
+  void addRandom(int randomIndex) {
+    empty.add(morceauxText[randomIndex].story);
+    morceauxText.removeAt(randomIndex);
   }
 }
 

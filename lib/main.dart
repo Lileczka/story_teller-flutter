@@ -1,14 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:story_teller/text_object.dart';
-//import 'story_teller.dart';
+import 'story_teller.dart';
 
-void main() => runApp(Storyteller());
+void main() => runApp(const Storyteller());
 
 class Storyteller extends StatelessWidget {
   //const Storyteller({super.key});
-  Storyteller({Key? key}) : super(key: key);
+  const Storyteller({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,6 +29,7 @@ class Storyteller extends StatelessWidget {
                 alignment: Alignment.topCenter,
               ),
             ),
+            margin: const EdgeInsets.only(top: 30),
             child: const StoryPage(),
           ),
         ),
@@ -49,7 +48,7 @@ class StoryPage extends StatefulWidget {
 
 class _StoryPageState extends State<StoryPage> {
   // création d'une instance de la classe FullStory
-  //FullStory fullStory = FullStory();
+  FullStory fullStory = FullStory();
   bool showText = false;
 
   List<String> empty = [];
@@ -72,68 +71,66 @@ class _StoryPageState extends State<StoryPage> {
         'Soudain, elle a entendu un bruit étrange et a couru pour voir ce que c\'était.'),
   ];
 
-  String getRandom() {
-    Random random = Random();
-
-    int randomIndex = random.nextInt(morceauxText.length);
-    morceauxText.removeAt(randomIndex);
-    String randomValue = morceauxText[randomIndex].story;
-
-    print(randomValue);
-    print(randomIndex);
-
-    return randomValue;
-  }
-
-  void addRandom(randomValue) {
-    //morceauxText.remove(randomValue);
-    empty.add(randomValue);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      //alignment: Alignment.bottomCenter,
       children: <Widget>[
         const SizedBox(
-          height: 60,
+          height: 90,
         ),
-        // condition affichage du texte (cacher le text)
         if (!showText)
           Expanded(
             child: ListView.builder(
-              itemCount: empty.length,
+              itemCount: fullStory.empty.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  title: Text(empty[index]),
+                  title: Text(
+                    fullStory.empty[index],
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                  ),
                 );
               },
             ),
           ),
-
-        // un widget qui permet de créer un espace disponible vide et flexible dans une colonne ou une ligne ici espace verticale
-        //const Spacer(),
-        // bouton qui appelle la méthode addStory()
-
-        TextButton(
-          onPressed: () {
-            String randomValue = getRandom();
-            setState(() {
-              addRandom(randomValue);
-            });
-          },
-          style: ButtonStyle(
-            minimumSize: MaterialStateProperty.all(
-              const Size(200, 40),
-            ),
-            backgroundColor: MaterialStateProperty.all(
-              const Color.fromARGB(255, 244, 115, 60),
+        if (!showText && fullStory.morceauxText.isEmpty)
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 80.0),
+              child: Text(
+                "C'est la fin",
+                style: TextStyle(fontSize: 20),
+              ),
             ),
           ),
-          child: const Text(
-            'Ajouter',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: TextButton(
+              onPressed: () {
+                int randomValue = fullStory.getRandom();
+                setState(() {
+                  fullStory.addRandom(randomValue);
+                });
+              },
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(
+                  const Size(200, 40),
+                ),
+                backgroundColor: MaterialStateProperty.all(
+                  const Color.fromARGB(255, 244, 115, 60),
+                ),
+              ),
+              child: const Text(
+                'Ajouter',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                ),
+              ),
             ),
           ),
         ),
